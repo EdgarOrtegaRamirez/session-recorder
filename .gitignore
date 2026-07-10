@@ -1,0 +1,13 @@
+target/
+*.rs.bk
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Session data (local only)
+session-data/
+
+# Environment
+.env
+.env.local
