@@ -10,6 +10,7 @@ pub struct SessionRecorder {
 #[derive(Debug)]
 pub enum RecorderError {
     NoActiveSession,
+    #[allow(dead_code)]
     AlreadyActive,
     IoError(std::io::Error),
     SerializationError(String),
@@ -70,10 +71,10 @@ impl SessionRecorder {
             .get_active_session()
             .map_err(|_| RecorderError::NoActiveSession)?;
 
-        let commands = match self.storage.get_session_commands(&session_id) {
-            Ok(cmds) => cmds,
-            Err(_) => Vec::new(), // No commands recorded yet
-        };
+        let commands = self
+            .storage
+            .get_session_commands(&session_id)
+            .unwrap_or_default();
         let now = chrono::Utc::now();
         let start_time = commands
             .first()
@@ -124,6 +125,7 @@ impl SessionRecorder {
         ))
     }
 
+    #[allow(dead_code, clippy::too_many_arguments)]
     pub fn record_command(
         &self,
         session_id: &str,
@@ -158,6 +160,7 @@ impl SessionRecorder {
     }
 }
 
+#[allow(dead_code)]
 fn truncate_output(output: &str, max_len: usize) -> String {
     if output.len() <= max_len {
         output.to_string()
@@ -168,6 +171,7 @@ fn truncate_output(output: &str, max_len: usize) -> String {
 }
 
 /// Execute a command with timing and output capture
+#[allow(dead_code)]
 pub fn execute_command(command: &str, cwd: &str) -> (i32, String, String, Duration) {
     let start = Instant::now();
 

@@ -107,6 +107,7 @@ impl SessionStorage {
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn append_command(&self, session_id: &str, cmd: &CommandEvent) -> Result<(), StorageError> {
         let commands_path = self.commands_path(session_id);
 
@@ -186,7 +187,7 @@ impl SessionStorage {
             session.username, session.hostname
         ));
         output.push_str(&format!("Commands: {}\n", session.commands.len()));
-        output.push_str(&format!("\n--- Commands ---\n"));
+        output.push_str("\n--- Commands ---\n");
 
         for cmd in &session.commands {
             let first_line = cmd.stdout_preview.lines().next().unwrap_or("");

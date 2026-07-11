@@ -82,6 +82,7 @@ pub fn replay_session(
 }
 
 /// Format a session as a bash script (for non-interactive replay)
+#[allow(dead_code)]
 pub fn format_as_script(session: &Session) -> Result<String, StorageError> {
     let mut script = String::new();
 
